@@ -5,6 +5,7 @@
 Este projeto propõe a configuração de um servidor multimídia baseado em Linux, utilizando Samba para compartilhar arquivos de mídia (fotos e vídeos) de forma segura entre sistemas Windows e Linux em uma rede doméstica ou de pequeno escritório. 
 
 🔹 **Motivação**: Porque o Windows e Linux não possuem compatibilidade nativa para compartilhamento de arquivos. 
+
 🔹 **Vantagens**:
 
 - **Flexibilidade**: Compartilhamento eficiente entre diferentes sistemas operacionais.
