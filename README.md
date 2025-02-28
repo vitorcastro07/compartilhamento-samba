@@ -1,5 +1,5 @@
 # 🔒 Compartilhamento de Fotos e Vídeos com Samba
-
+ALUNOS: Fco Vitor Castro e Tauã Silva 
 ## 🖥️ Implementação do Samba para Compartilhamento entre Windows e Linux
 
 Este projeto propõe a configuração de um servidor multimídia baseado em Linux, utilizando Samba para compartilhar arquivos de mídia (fotos e vídeos) de forma segura entre sistemas Windows e Linux em uma rede doméstica ou de pequeno escritório. 
