@@ -1,4 +1,4 @@
-# 🔒 Compartilhamento Seguro de Fotos e Vídeos com Samba
+# 🔒 Compartilhamento de Fotos e Vídeos com Samba
 
 ## 🖥️ Implementação do Samba para Compartilhamento entre Windows e Linux
 
