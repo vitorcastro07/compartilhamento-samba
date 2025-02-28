@@ -1,66 +1,89 @@
-# compartilhamento-samba
-Samba para Compartilhamento de Mídia entre Windows e Linux (Fotos e Mídia):
-Desenvolver um servidor multimídia baseado em Linux com Samba que permita o compartilhamento de grandes arquivos de mídia (fotos, vídeos) entre sistemas Windows e Linux em uma rede doméstica ou de pequeno escritório. Mas por que para compartilhar precisamos utilizar esse método? Porque o windows e o linux não são compatíveis entre si. Portanto esse projeto apresenta um meio para quem deseja ou precisa fazer esse compartilhamento entre essas duas máquinas.  Também incluindo a criação de uma interface simples para visualizar ou editar os arquivos. 
+# 🔒 Compartilhamento Seguro de Fotos e Vídeos com Samba
 
-**● Vamos usar o samba na máquina linux Debian 12.9.0 para fazer conexão com windows 11 home versão 23H2, criando um diretório para o envio de imagens e vídeos JPG e PNG para imagens e MP4 e MOV para vídeos.**
-O software utilizado para a emulação é o Oracle VM VirtualBox na versão 7.0.20 para a virtualização das máquinas tanto Windows e Linux.
+## 🖥️ Implementação do Samba para Compartilhamento entre Windows e Linux
 
-Vamos realizar os teste com as maneiras possíveis de utilização das máquinas sendo eles virtual  para virtual, virtual para física e física para física. Tendo em vista a utilização de duas máquinas físicas para uma virtual .
+Este projeto propõe a configuração de um servidor multimídia baseado em Linux, utilizando Samba para compartilhar arquivos de mídia (fotos e vídeos) de forma segura entre sistemas Windows e Linux em uma rede doméstica ou de pequeno escritório. 
 
-Após apresentar os códigos e como ensinar fazer esse compartilhamento de arquivos, vamos verificar se os arquivos desejados estão na pasta certa, fazer a visualização e finalizar a apresentação.
+🔹 **Motivação**: Porque o Windows e Linux não possuem compatibilidade nativa para compartilhamento de arquivos. 
+🔹 **Vantagens**:
 
-➔ PASSO A PASSO EM CODIGOS :
+- **Flexibilidade**: Compartilhamento eficiente entre diferentes sistemas operacionais.
+- **Eficiência**: Transferência rápida e estável de arquivos de mídia.
 
-**● Primeiro vamos atualizar a máquina virtual através do terminal com os comandos:**
-sudo apt update && sudo apt upgrade 
+## 🛠️ Ferramentas e Softwares Utilizados para a Atividade
 
+- 🔹 **Linux Debian 12.9.0** (servidor Samba)
+- 🔹 **Windows 11 Home (versão 23H2)** (cliente)
+- 🔹 **Oracle VM VirtualBox 7.0.20** (virtualização)
 
-**● Para fazer a instalação do samba pelo terminal do Debian vamos utilizar o comando**
-sudo apt install samba
+Os testes serão realizados nos seguintes cenários:
+✅ Virtual para Virtual  
+✅ Virtual para Física  
+✅ Física para Física  
 
+## 🔧 Passo a Passo: Instalação e Configuração do Samba
 
-**● Agora vamos criar a pasta na qual vamos alocar os arquivos de midia que vão ser compartilhados entre os sistemas operacionais com o comando**
-  
+### 1️⃣ **Atualizar a máquina virtual**
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+### 2️⃣ **Instalar o Samba**
+```bash
+sudo apt install samba -y
+```
+
+### 3️⃣ **Criar a pasta para arquivos compartilhados**
+```bash
 sudo mkdir -p /home/usuario/midias
+```
 
+### 4️⃣ **Configurar permissões de acesso**
+```bash
+sudo chown -R administrador:usuário /home/usuario/midias
+sudo chmod -R 770 /home/usuario/midias
+```
+🔹 *Somente usuários autenticados terão acesso ao diretório.*
 
-
-**● Agora vamos alterar as permissões dos arquivos para ficarmos com acesso irrestrito com os comandos**
-'Seu usuário administrador:seu usuário comum'
-
-sudo chown -R blackk:aula /home/usuario/midias
-
-sudo  chmod -R 777 /home/usuario/midias
-
-
-**●Agora é necessário configurarmos o samba para que seja possível o windows acessar a pasta compartilhada com o comando**
-sudo nano /etc/samba/smb.conf 
-
-como editar o arquivo:
-
+### 5️⃣ **Editar a configuração do Samba**
+```bash
+sudo nano /etc/samba/smb.conf
+```
+Adicionar a seguinte configuração:
+```ini
 [Midia]
 path = /home/usuario/midias
 read only = no
 browsable = yes
-guest ok = yes
-force user = nobody
-force group = nogroup
-create mask = 0666
-directory mask = 0777
-veto files = /*.txt/*.exe/*.sh/*.bat/*.zip/*.rar /*.pdf/*.doc/*.docx/*.xlsx/*.pptx/ 
+guest ok = no
+valid users = usuario
+create mask = 0660
+directory mask = 0770
+veto files = /*.exe/*.sh/*.bat/*.zip/*.rar/*.pdf/*.doc/*.docx/*.xlsx/*.pptx/
 veto oplock files = yes
+```
+🔹 *Essa configuração VETO FILES e VETO OPLOCK restringe o compartilhamento de arquivos que não sejam foto ou midia, garantindo assim a excluisividade da pasta, para a proposta visada pelo projeto*
 
-OBSERVAÇÃO: A funcionalidade do **veto files** e **veto oplock**
-
-**●Agora vamos reiniciar o samba e verificar se ele esta rodando corretamente com os comandos:**
-
+### 6️⃣ **Reiniciar e verificar o status do Samba**
+```bash
 sudo systemctl restart smbd
-
-sudo systemctl enable smbd 
-
+sudo systemctl enable smbd
 sudo systemctl status smbd
+```
 
-**● Por fim, para acessarmos a pasta no windows pressionamos a tecla WIN + R e vamos digitar o ip da sua máquina virtual e depois o caminho da pasta de mídia dessa maneira:**
+## 📂 Acessando a Pasta Compartilhada no Windows
 
-EXEMPLO = \\ ip do servidor\midia 
+Para acessar a pasta de mídia no Windows, pressione `WIN + R` e digite:
+```plaintext
+\\<IP_DO_SERVIDOR>\midia
+```
+
+
+## 🚀 Conclusão e Testes
+
+Após configurar o Samba, testaremos a transferência de arquivos entre os dispositivos e validaremos a segurança do compartilhamento.
+
+
+🚀 **Obrigado e se divirta com o compartilhamento de midias entre os sistemas operacionais [Vitor Castro]**
+
 
