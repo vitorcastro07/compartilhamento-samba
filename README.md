@@ -42,7 +42,7 @@ sudo mkdir -p /home/usuario/midias
 ### 4️⃣ **Configurar permissões de acesso**
 ```bash
 sudo chown -R administrador:usuário /home/usuario/midias
-sudo chmod -R 770 /home/usuario/midias
+sudo chmod -R 777 /home/usuario/midias
 ```
 🔹 *Somente usuários autenticados terão acesso ao diretório.*
 
@@ -56,10 +56,11 @@ Adicionar a seguinte configuração:
 path = /home/usuario/midias
 read only = no
 browsable = yes
-guest ok = no
-valid users = usuario
-create mask = 0660
-directory mask = 0770
+guest ok = yes
+force user = nobody
+force group = nogroup
+create mask = 0666
+directory mask = 0777
 veto files = /*.exe/*.sh/*.bat/*.zip/*.rar/*.pdf/*.doc/*.docx/*.xlsx/*.pptx/
 veto oplock files = yes
 ```
